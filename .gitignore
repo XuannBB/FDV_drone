@@ -17,3 +17,9 @@ Thumbs.db
 # 排除開發工具自動生成的超深層暫存區
 .cache/
 node_modules/
+
+build/
+dist/
+*.spec
+make.py
+__pycache__/
