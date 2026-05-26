@@ -8,9 +8,9 @@ The AURA platform bridges high-fidelity aerospace dynamics with UAV cinematic tr
 
 ## 🎯 Mission Objectives
 
-The AURA 7" platform is engineered as a high-performance tactical observation and tracking system designed to interface with high speed target vectors. Its primary mission constraints include:
+The AURA 7" platform is engineered as a high-performance tactical observation and tracking system designed to interface with high-dynamic target vectors. Its primary mission constraints include:
 
-1. **High-Dynamic Rocket Trajectory Tracking**: Real-time localization, cinematic recording, and vector estimation of sounding rockets operating under extreme conditions (up to Max Q and supersonic flight regimes).
+1. **High-Dynamic Rocket Trajectory Tracking**: Real-time localization, cinematic recording, and vector estimation of sounding rockets operating under extreme conditions (up to Max Q and high-acceleration flight regimes).
 2. **Dual-GNSS Telemetry Fusion**: Utilizing heterogeneous dual-GPS hardware arrays (Align HEGAPS11 + TBS M10Q) to provide redundant positioning, anti-jamming resilience, and synchronized 10-channel telemetry streaming.
 3. **Heavy-Lift Stabilized Payload Operations**: Sustaining stable 4K target acquisition and gimbal orientation under high vibration profiles and aerodynamic stress during aggressive intercept vectors.
 4. **Supply Chain Integrity**: Built exclusively on professional-grade, strictly non-PRC (de-China) component architectures (TBS, Align, APD, Xnova) to meet rigorous aerospace research and deployment standards.
