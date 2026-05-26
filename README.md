@@ -1,12 +1,14 @@
 # AURA 7" Heavy-Lift Rocket Tracking & Interception Mission Control
 
-Welcome to the official deployment repository for the **AURA 7-inch Heavy-Lift Avionics & Rocket Tracking Platform**. This repository hosts the standalone, production-ready binary distribution of the ground station telemetry dashboard and multi-physics trajectory estimation core.
+Welcome to the official deployment repository for the **AURA 7-inch Heavy-Lift Avionics & Rocket Tracking Platform**. This repository hosts the standalone, production-ready ground station telemetry dashboard and the first-principles multi-physics trajectory estimation core.
+
+The AURA platform bridges high-fidelity aerospace dynamics with UAV cinematic tracking constraints, serving as an advanced, physics-bounded **Optical Path Planner and Mission Simulator**.
 
 ---
 
 ## 🎯 Mission Objectives
 
-The AURA 7" platform is engineered as a high-performance tactical observation and tracking system designed to interface with supersonic target vectors. Its primary mission constraints include:
+The AURA 7" platform is engineered as a high-performance tactical observation and tracking system designed to interface with supersonic target vectors (Mach 2.1+). Its primary mission constraints include:
 
 1. **High-Dynamic Rocket Trajectory Tracking**: Real-time localization, cinematic recording, and vector estimation of sounding rockets operating under extreme conditions (up to Max Q and supersonic flight regimes).
 2. **Dual-GNSS Telemetry Fusion**: Utilizing heterogeneous dual-GPS hardware arrays (Align HEGAPS11 + TBS M10Q) to provide redundant positioning, anti-jamming resilience, and synchronized 10-channel telemetry streaming.
@@ -15,19 +17,36 @@ The AURA 7" platform is engineered as a high-performance tactical observation an
 
 ---
 
-## 💎 Technical Core & Ground Station Features
+## 💎 Technical Core & Subsystems
 
-Unlike traditional visualization ground stations, this software serves as an advanced, physics-bounded **Optical Path Planner and Mission Simulator** that bridges high-fidelity aerospace dynamics with UAV cinematic tracking constraints:
+Unlike traditional visualization ground stations that rely on black-box game engines or simplified linear assumptions, this platform’s core simulation and tracking algorithms are derived entirely from **first principles**:
 
-### 🚀 Core Simulation & Path Planning
-* **Integrated Optical Photography Path Planning**: The core engine solves the time-variant 3D coordinate matrices between the chasing UAV and the target rocket. It dynamically computes the optimal gimbal pitch/yaw vectors to ensure the target rocket stays locked within the center of the 4K optical sensor across the entire flight envelope.
-* **High-Fidelity Multi-Physics Analytical Core**: Rather than utilizing simplified linear assumptions, the software integrates real atmospheric density models, kinematic constraints, and aerodynamic drag coefficients to resolve tracking anomalies under maximum dynamic pressure (Max Q).
-* **UAV Performance & Inertia Co-Simulation**: The path-planning solver is closed-loop bound to the physical limits of the Aura 7" drone. It correlates aggressive target-chasing vectors directly against the real motor torque curves (Xnova 2812 1300KV), structural weight (1.90 kg AUW), and maximum available thrust profiles to ensure the generated trajectory is aerodynamically feasible and mathematically deterministic.
+### 🚀 1. High-Fidelity Multi-Physics Analytical Core
+* **6-DOF Rigid-Body Dynamics**: Full 6-DOF equations of motion utilizing quaternion attitude representation to avoid gimbal lock during aggressive tracking maneuvers.
+* **Aerodynamic & Inertial Coupling**: Integrates real atmospheric density models, 3D aerodynamic drag projections, and gyroscopic coupling integrated via **Runge-Kutta 4th Order (RK4) at 1 kHz**.
+* **Inertia Tensor**: Exactly assembled utilizing the parallel-axis theorem based on individual component masses and geometries.
 
-### 💻 Ground Station Dashboard Capabilities
-* **Parameterized Component Architecture**: Features hardcoded mathematical scaling models aligned directly with the physical 1.90 kg payload inertia matrix for high-fidelity responses.
-* **Deterministic Trajectory Intercept Solver**: Real-time multi-physics dynamics computation engine evaluating tracking matrices via pre-loaded CSV data.
-* **Synchronized Telemetry HUD**: Interactive 3-axis attitude display, dual-battery voltage diagnostics, and multi-channel responsive kinematic graphs for real-time mission oversight.
+### ⚡ 2. Advanced Propulsion Model
+* **Battery Dynamics**: Custom 6S LiPo model mapping an empirical open-circuit-voltage (OCV) curve coupled with real-time voltage sag emulation under high current demands.
+* **Motor-Propeller Solver**: Resolves the instantaneous operating point by solving the non-linear motor torque balance as a quadratic equation.
+* **Thermal Modeling**: Integrates a transient motor thermal model to monitor and predict stator temperature spikes during high-G intercept climbs.
+
+### 🎮 3. Flight Control & Actuator Mixing
+* **Betaflight-Style PID**: Cascade PID rate loops equipped with dynamic D-term filtering and anti-windup algorithms.
+* **Advanced Compensation**: Features real-time voltage compensation and Throttle PID Attenuation (TPA) to maintain control authority across the entire voltage discharge curve.
+* **Actuator Mixing**: True X-quad actuator mixing mapped directly onto high-performance industrial hardware profiles.
+
+### 📸 4. Integrated Optical Path Planner
+* **3D Coordinate Matrices**: Continuously solves the time-variant 3D relative positions between the chasing UAV and the target rocket.
+* **Predictive Gimbal Locking**: Dynamically computes optimal pitch/yaw vectors to keep the target locked within the center of the G3P Pro 4K optical sensor under maximum dynamic pressure (Max Q).
+
+---
+
+## 🧪 Verification Suite
+
+To ensures the software behaves exactly as the physics dictates, the core architecture includes a rigorous mathematical verification suite:
+* **Inertia & Drag Verification**: Unit tests validating the accuracy of the parallel-axis theorem calculations and multi-angle aerodynamic drag projections.
+* **Control Loop Sanity**: Automated tests to verify PID sign conventions and prevent control loop divergence prior to simulation execution.
 
 ---
 
@@ -70,8 +89,8 @@ Unlike traditional visualization ground stations, this software serves as an adv
 This repository is delivered as a compiled standalone package. No local Python environment or external ANSYS runtimes are required.
 
 1. **Clone or Download the Package**: Download this repo as a ZIP file and extract it to your local machine.
-2. **Execute the Control Core**: Double-click **`Aura7_MissionControl.exe`**. Do not close the black terminal window, as it runs the backend server.
-3. **Open the HUD UI**: Open any browser (Chrome/Edge/Brave) and go to:
+2. **Execute the Control Core**: Double-click **`Aura7_MissionControl.exe`**. Do not close the terminal window, as it runs the backend server.
+3. **Open the HUD UI**: Open any modern browser (Chrome/Edge/Brave) and navigate to:
    👉 **`http://localhost:8080`**
 
 ---
